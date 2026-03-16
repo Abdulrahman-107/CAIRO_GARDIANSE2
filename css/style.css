@@ -1,0 +1,133 @@
+/* Guardians of Cairo — Full Screen Responsive */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  width:100%; height:100%;
+  overflow:hidden;
+  background:#030308;
+  font-family:'Courier New', monospace;
+  -webkit-tap-highlight-color:transparent;
+}
+
+#wrap {
+  width:100%; height:100%;
+  display:flex; flex-direction:column;
+  position:relative; background:#030308;
+}
+
+/* ── TOP BAR ─────────────────────────── */
+#topbar {
+  display:flex; align-items:center; justify-content:space-between;
+  background:#06060f; border-bottom:1px solid #111827;
+  padding:0 10px; height:36px; flex-shrink:0; z-index:10;
+}
+#gametitle { color:#ffd700; font-size:clamp(8px,2vw,12px); font-weight:700; letter-spacing:2px; }
+.vtag { color:#00ff88; font-size:.75em; }
+#topbtns { display:flex; gap:6px; }
+#topbtns button {
+  background:#0d0d20; color:#888; border:1px solid #1e1e3e;
+  padding:4px 10px; font-size:13px; cursor:pointer; border-radius:4px;
+  font-family:inherit; transition:background .1s,color .1s;
+}
+#topbtns button:hover  { background:#181830; color:#ccc; }
+#topbtns button:active { background:#222244; }
+
+/* ── CANVAS — fills all available space ─ */
+#canvasWrap {
+  flex:1 1 auto; display:flex;
+  align-items:center; justify-content:center;
+  overflow:hidden; background:#020208; min-height:0;
+  position:relative;
+}
+#gc {
+  display:block;
+  /* Scale to fill the available area keeping 800:300 ratio */
+  width:100%; height:100%;
+  object-fit:contain;
+  image-rendering:pixelated;
+  image-rendering:crisp-edges;
+  cursor:pointer;
+  max-width:100%; max-height:100%;
+}
+
+/* ── MESSAGE BAR ──────────────────────── */
+#msg {
+  text-align:center; background:#040408; color:#ffd700;
+  font-size:clamp(8px,1.8vw,11px); font-weight:700; letter-spacing:2px;
+  padding:3px 6px; border-top:1px solid #0a0a18;
+  flex-shrink:0; text-shadow:0 0 8px rgba(255,215,0,.4);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+
+/* ── MOBILE BUTTONS — hidden on desktop ─ */
+#btns {
+  background:#04040c; padding:5px 8px 6px;
+  display:flex; justify-content:space-between; gap:6px;
+  border-top:1px solid #0a0a1a; flex-shrink:0;
+}
+#btns-move, #btns-action { display:flex; gap:4px; }
+.gb {
+  min-width:clamp(36px,8vw,56px);
+  padding:clamp(5px,1.5vh,10px) 6px;
+  background:#0c0c1e; color:#888; border:1px solid #1a1a30;
+  font-family:'Courier New',monospace; font-size:clamp(7px,1.8vw,10px);
+  font-weight:700; cursor:pointer; border-radius:4px;
+  touch-action:none; -webkit-user-select:none; user-select:none;
+  line-height:1.2; text-align:center; transition:background .05s;
+}
+.gb:active { background:#181832; }
+.kb { color:#444; font-size:.8em; display:block; }
+#bL,#bR { color:#aaaacc; border-color:#1e1e36; }
+#bJ     { color:#aaffaa; border-color:#1a3a1a; }
+#bP     { color:#ffbbaa; border-color:#3a1a1a; }
+#bS     { color:#aaaaff; border-color:#1a1a4a; }
+#bU     { color:#ffd700; border-color:#3a2a00; background:#0e0c00; }
+
+/* ── HINT BAR ──────────────────────────── */
+#hint {
+  text-align:center; background:#020205;
+  color:rgba(255,255,255,.12); font-size:clamp(6px,1.2vw,8px);
+  padding:2px 4px; flex-shrink:0; letter-spacing:.5px;
+  white-space:nowrap; overflow:hidden;
+}
+
+/* ── HIDE BUTTONS+HINT ON DESKTOP ─────── */
+@media (hover:hover) and (pointer:fine) {
+  /* Has a real mouse = desktop/laptop */
+  #btns  { display:none; }
+  #hint  { display:none; }
+  #msg   { display:none; }
+}
+
+/* ── OVERLAYS ──────────────────────────── */
+#menuOv, #selOv {
+  position:fixed; inset:0; z-index:100; overflow:hidden;
+}
+#goOv {
+  position:fixed; inset:0; z-index:90;
+  background:rgba(0,0,0,.88); display:none;
+  align-items:center; justify-content:center;
+  backdrop-filter:blur(2px);
+}
+#goPanel {
+  background:rgba(6,6,18,.97); border:1px solid #222; border-radius:6px;
+  padding:clamp(16px,4vh,32px) clamp(20px,5vw,48px);
+  text-align:center; min-width:min(320px,90vw);
+  box-shadow:0 0 40px rgba(0,0,0,.8);
+}
+#goOv h2 { font-size:clamp(18px,5vw,28px); letter-spacing:4px; margin-bottom:12px; text-shadow:0 0 20px currentColor; }
+.go-line  { color:#666; font-size:clamp(9px,2vw,12px); letter-spacing:1px; margin-bottom:14px; }
+.go-score { color:#ffd700; font-size:clamp(14px,4vw,20px); font-weight:700; letter-spacing:2px; margin-bottom:6px; }
+.go-high  { font-size:clamp(9px,2vw,12px); letter-spacing:1px; margin-bottom:22px; min-height:16px; }
+#goBtns { display:flex; gap:10px; justify-content:center; }
+.go-btn {
+  background:#0e0e1e; color:#aaa; border:1px solid #333;
+  padding:clamp(6px,2vh,10px) clamp(14px,4vw,24px);
+  font-family:inherit; font-size:clamp(9px,2vw,12px);
+  font-weight:700; letter-spacing:2px; cursor:pointer; border-radius:4px;
+  transition:background .1s,color .1s,border-color .1s;
+}
+.go-btn:hover { background:#1a1a30; color:#fff; border-color:#555; }
+.go-btn-primary { background:#1a1200; color:#ffd700; border-color:#4a3800; }
+.go-btn-primary:hover { background:#2a1f00; border-color:#ffd700; box-shadow:0 0 10px rgba(255,215,0,.3); }
+.hcard { background:rgba(10,10,24,.92); border-radius:6px; cursor:pointer; transition:border-color .15s,box-shadow .15s; }
