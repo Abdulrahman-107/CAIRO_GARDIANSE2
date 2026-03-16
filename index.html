@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>GUARDIANS OF CAIRO</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <link rel="stylesheet" href="css/style.css?v=cce709da">
+</head>
+<body>
+
+  <!-- LOADING SCREEN OVERLAY -->
+  <div id="loadOv" style="display:none;position:fixed;inset:0;z-index:999;background:#020510;
+    font-family:'Courier New',monospace;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;">
+    <!-- Animated grid -->
+    <div id="ldGrid" style="position:absolute;inset:0;
+      background-image:linear-gradient(rgba(0,170,255,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(0,170,255,0.06) 1px,transparent 1px);
+      background-size:44px 44px;animation:ldGridMove 12s linear infinite;"></div>
+    <!-- Glow -->
+    <div style="position:absolute;width:600px;height:200px;top:50%;left:50%;transform:translate(-50%,-50%);
+      background:radial-gradient(ellipse,rgba(0,100,255,0.08) 0%,transparent 70%);
+      animation:ldGlow 3s ease-in-out infinite;"></div>
+    <!-- Corner brackets -->
+    <div style="position:absolute;top:16px;left:16px;width:20px;height:20px;border-top:2px solid #00aaff44;border-left:2px solid #00aaff44;"></div>
+    <div style="position:absolute;top:16px;right:16px;width:20px;height:20px;border-top:2px solid #00aaff44;border-right:2px solid #00aaff44;"></div>
+    <div style="position:absolute;bottom:16px;left:16px;width:20px;height:20px;border-bottom:2px solid #00aaff44;border-left:2px solid #00aaff44;"></div>
+    <div style="position:absolute;bottom:16px;right:16px;width:20px;height:20px;border-bottom:2px solid #00aaff44;border-right:2px solid #00aaff44;"></div>
+    <!-- Content -->
+    <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:16px;width:min(500px,90%);">
+      <!-- Logo -->
+      <div id="ldLogoImg" style="width:min(380px,85%);display:none;">
+        <img id="ldLogoSrc" style="width:100%;height:auto;filter:drop-shadow(0 0 20px #00ccff88);" src="" alt="">
+      </div>
+      <div id="ldLogoTxt" style="text-align:center;">
+        <div style="font-size:clamp(16px,5vw,30px);font-weight:900;letter-spacing:6px;color:#00ccff;
+          text-shadow:0 0 20px rgba(0,200,255,0.5);animation:ldLogoPulse 2.5s ease-in-out infinite;">GUARDIANS OF CAIRO</div>
+        <div style="font-size:clamp(10px,2vw,13px);letter-spacing:3px;color:#00ccff66;margin-top:4px;">حراس القاهرة</div>
+      </div>
+      <!-- Scanline -->
+      <div style="width:100%;height:1px;background:linear-gradient(90deg,transparent,#00ccff,transparent);
+        animation:ldScan 2s ease-in-out infinite;"></div>
+      <!-- Bar -->
+      <div style="width:100%;">
+        <div style="display:flex;justify-content:space-between;font-size:9px;letter-spacing:2px;color:#00aaff66;margin-bottom:6px;">
+          <span id="ldBarLabel">INITIALIZING SYSTEMS</span>
+          <span id="ldPct">0%</span>
+        </div>
+        <div style="width:100%;height:8px;background:#050d20;border:1px solid #00aaff22;position:relative;overflow:hidden;">
+          <div style="position:absolute;inset:0;display:flex;">
+            <div style="flex:1;border-right:1px solid rgba(0,0,0,.3);"></div><div style="flex:1;border-right:1px solid rgba(0,0,0,.3);"></div>
+            <div style="flex:1;border-right:1px solid rgba(0,0,0,.3);"></div><div style="flex:1;border-right:1px solid rgba(0,0,0,.3);"></div>
+            <div style="flex:1;border-right:1px solid rgba(0,0,0,.3);"></div><div style="flex:1;border-right:1px solid rgba(0,0,0,.3);"></div>
+            <div style="flex:1;border-right:1px solid rgba(0,0,0,.3);"></div><div style="flex:1;border-right:1px solid rgba(0,0,0,.3);"></div>
+            <div style="flex:1;"></div>
+          </div>
+          <div id="ldBar" style="height:100%;width:0%;background:linear-gradient(90deg,#0044aa,#00aaff,#88eeff);
+            transition:width 0.3s ease;position:relative;overflow:hidden;">
+            <div style="position:absolute;top:0;bottom:0;width:40px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);
+              animation:ldShimmer 1.5s ease-in-out infinite;"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Status -->
+      <div id="ldStatus" style="font-size:10px;letter-spacing:3px;color:#00ccff88;animation:ldBlink 1.2s step-end infinite;">LOADING...</div>
+      <div style="font-size:8px;letter-spacing:2px;color:#223344;">CAIRO 2042  ·  THE SKY SPLIT OPEN ABOVE THE NILE</div>
+      <div style="display:flex;gap:6px;">
+        <div style="width:5px;height:5px;border-radius:50%;background:#00ccff;animation:ldDot 1.4s ease-in-out infinite;"></div>
+        <div style="width:5px;height:5px;border-radius:50%;background:#00ccff;animation:ldDot 1.4s ease-in-out .2s infinite;"></div>
+        <div style="width:5px;height:5px;border-radius:50%;background:#00ccff;animation:ldDot 1.4s ease-in-out .4s infinite;"></div>
+      </div>
+    </div>
+  </div>
+  <style>
+    @keyframes ldGridMove{from{background-position:0 0}to{background-position:44px 44px}}
+    @keyframes ldGlow{0%,100%{opacity:.6}50%{opacity:1}}
+    @keyframes ldLogoPulse{0%,100%{opacity:.85}50%{opacity:1}}
+    @keyframes ldScan{0%,100%{opacity:.3}50%{opacity:.8}}
+    @keyframes ldShimmer{0%{left:-40px}100%{left:100%}}
+    @keyframes ldBlink{0%,100%{opacity:1}50%{opacity:.3}}
+    @keyframes ldDot{0%,100%{opacity:.2}50%{opacity:1}}
+  </style>
+
+<div id="wrap">
+
+  <div id="topbar">
+    <span id="gametitle">⚡ <span id="titletext">GUARDIANS OF CAIRO</span> <span class="vtag">v3.0</span></span>
+    <div id="topbtns">
+      <button id="muteBtn"  onclick="handleMuteToggle()" title="Sound (M)">🔊</button>
+      <button id="pauseBtn" onclick="togglePause()"      title="Pause (P)">⏸</button>
+    </div>
+  </div>
+
+  <div id="canvasWrap">
+    <canvas id="gc" width="800" height="300"></canvas>
+  </div>
+
+  <div id="msg">CAIRO 2042 — THE SKY SPLIT OPEN ABOVE THE NILE...</div>
+
+  <!-- Mobile controls — hidden on desktop, shown on touch devices -->
+  <div id="btns">
+    <div id="btns-move">
+      <button class="gb" id="bL">◀</button>
+      <button class="gb" id="bR">▶</button>
+      <button class="gb" id="bJ">JUMP</button>
+    </div>
+    <div id="btns-action">
+      <button class="gb" id="bP">PUNCH<br><span class="kb">J</span></button>
+      <button class="gb" id="bS">SPECIAL<br><span class="kb">K</span></button>
+      <button class="gb" id="bU">ULTIMATE<br><span class="kb">L</span></button>
+    </div>
+  </div>
+
+  <div id="hint">A/D move · W/Space jump · J punch · K special · L ultimate · P pause</div>
+
+  <div id="menuOv" style="display:none"></div>
+  <div id="selOv"  style="display:none"></div>
+
+  <div id="goOv">
+    <div id="goPanel">
+      <h2 id="goTitle">GAME OVER</h2>
+      <div id="goWave"  class="go-line"></div>
+      <div id="goScore" class="go-score"></div>
+      <div id="goHigh"  class="go-high"></div>
+      <div id="goBtns">
+        <button onclick="showSelect()" class="go-btn go-btn-primary">PLAY AGAIN</button>
+      </div>
+    </div>
+  </div>
+
+  <span id="wv" style="display:none">1</span>
+</div>
+
+<script type="module" src="js/main.js?v=cce709da"></script>
+<script type="module" src="js/hud.js?v=cce709da"></script>
+</body>
+</html>
